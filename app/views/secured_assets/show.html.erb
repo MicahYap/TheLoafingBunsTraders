@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @secured_asset %>
+
+<div>
+  <%= link_to "Edit this secured asset", edit_secured_asset_path(@secured_asset) %> |
+  <%= link_to "Back to secured assets", secured_assets_path %>
+
+  <%= button_to "Destroy this secured asset", @secured_asset, method: :delete %>
+</div>

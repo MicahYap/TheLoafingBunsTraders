@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Secured assets" %>
+
+<h1>Secured assets</h1>
+
+<div id="secured_assets">
+  <% @secured_assets.each do |secured_asset| %>
+    <%= render secured_asset %>
+    <p>
+      <%= link_to "Show this secured asset", secured_asset %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New secured asset", new_secured_asset_path %>
