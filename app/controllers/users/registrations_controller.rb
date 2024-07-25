@@ -15,7 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.user_type = 'trader' # Default new users to 'trader'
 
     if resource.save
-        sign_up(resource_email, resource)
+        sign_up(resource_name, resource)
 
         if resource.user_type == 'admin'
           redirect_to admin_dashboard_index_path
@@ -23,7 +23,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
           redirect_to secured_assets_path
         end
     else
-      clean_up_passwords resource
       respond_with resource
     end
   end
