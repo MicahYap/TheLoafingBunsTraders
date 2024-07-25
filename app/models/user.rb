@@ -3,4 +3,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  validates :user_type, inclusion: {in: ['admin', 'trader']}, presence: true
+
+  before_validation :set_default_user_type, on: :create
+
+  private
+
+  def set_default_user_type
+    self.user_type ||= 'trader'
+  end
+
 end

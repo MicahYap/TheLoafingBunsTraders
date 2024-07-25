@@ -10,9 +10,29 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    build_resource(sign_up_params)
+    resource.user_type = 'trader' # Default new users to 'trader'
+
+    if resource.save
+        sign_up(resource_email, resource)
+
+        if resource.user_type == 'admin'
+          redirect_to admin_dashboard_index_path
+        else
+          redirect_to secured_assets_path
+        end
+    else
+      clean_up_passwords resource
+      respond_with resource
+    end
+  end
+
+  private
+  def sign_up_params
+    params.require(:user).permit(:email, :password, :password_confirmation)
+  end
+
 
   # GET /resource/edit
   # def edit
