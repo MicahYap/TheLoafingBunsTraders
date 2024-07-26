@@ -1,0 +1,29 @@
+<%= form_with(model: secured_asset) do |form| %>
+  <% if secured_asset.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(secured_asset.errors.count, "error") %> prohibited this secured_asset from being saved:</h2>
+
+      <ul>
+        <% secured_asset.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'button' %>
+
+  <div>
+    <%= form.label :trader_number, style: "display: block" %>
+    <%= form.text_field :trader_number %>
+  </div>
+
+  <div>
+    <%= form.label :carrots, style: "display: block" %>
+    <%= form.number_field :carrots %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

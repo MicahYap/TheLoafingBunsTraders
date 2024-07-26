@@ -1,0 +1,2 @@
+class SecuredAsset < ApplicationRecord
+end
