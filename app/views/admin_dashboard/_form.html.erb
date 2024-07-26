@@ -1,4 +1,4 @@
-<%= form_with post: trader, local: true do |form| %>
+<%= form_with(model: trader, url: admin_dashboard_index_path, method: :post, local: true) do |form| %>
   <% if trader.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(trader.errors.count, "mistake") %> prohibited this trader from being saved:</h2>
