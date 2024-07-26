@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   validates :user_type, inclusion: {in: ['admin', 'trader']}, presence: true
 
-  before_validation :set_default_user_type, on: :create
+  before_validation :set_default_user_type
 
   private
 
