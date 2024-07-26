@@ -25,6 +25,26 @@
     <%= form.password_field :password_confirmation %>
   </div>
 
+  <div class="field">
+    <%= f.label :birthday %><br />
+    <%= f.date_select :birthday %>
+  </div>
+
+  <div class="field">
+    <%= f.label :gender %><br />
+    <%= f.select :gender, ['Male','Female'] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+
+   <div class="field">
+    <%= f.label 'Cellphone Number' %><br />
+    <%= f.text_field :cp_number %>
+  </div>
+
   <div>
     <%= form.submit 'Create Trader' %>
   </div>
