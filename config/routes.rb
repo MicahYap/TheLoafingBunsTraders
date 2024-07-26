@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  get "admin_dashboard/index"
   root 'secured_assets#index'
 
   resources :secured_assets
-  resources :admin_dashboard, only: [:index]
+  resources :admin_dashboard, only: [:index, :new, :create, :edit, :update, :destroy]
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
