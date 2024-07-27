@@ -2,8 +2,20 @@
 <p>With great power comes great responsibility, so don't spill sensitive info! God is watching!</p>
 <%= link_to 'Create New Rabbit Trader',new_admin_dashboard_path %>
 
+<h1>pending users</h1>
+<% if @pending_traders.any? %>
+  <%= render 'pending_traders', traders: @pending_traders %>
+<% end %>
+
+<hr>
+
+<h1>approved users<h1>
 <% @traders.each do |user| %>
   <%= render partial: 'user', locals: { user: user } %>
+  <%= link_to "Edit", edit_admin_dashboard_path(user)%>
+  <%= button_to "Delete", admin_dashboard_path(user), method: :delete%>
 <% end %>
+
+<br>
 
 <%= button_to 'Logout', destroy_user_session_path, method: :delete %>

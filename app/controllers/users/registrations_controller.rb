@@ -13,15 +13,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
     resource.user_type = 'trader' # Default new users to 'trader'
+    resource.status = 'pending'
 
     if resource.save
-        sign_up(resource_name, resource)
-
-        if resource.user_type == 'admin'
-          redirect_to admin_dashboard_index_path
-        else
-          redirect_to secured_assets_path
-        end
+      pending_approval_email(resource)
+      flash[:notice] = 'Thanks for creating an account with us! Your account is pending review and approval.'
+      redirect_to root_path
     else
       respond_with resource
     end
@@ -29,10 +26,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   private
   def sign_up_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:email, :password, :password_confirmation,:birthday, :gender, :address, :cp_number)
   end
 
-
+  def pending_approval_email(user)
+    UserMailer.with(user: user).pending_approval.deliver_now
+    UserMailer.with(user: user).new_account_for_approval.deliver_now
+  end
   # GET /resource/edit
   # def edit
   #   super

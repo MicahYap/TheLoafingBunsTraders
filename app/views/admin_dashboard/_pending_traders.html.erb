@@ -1,0 +1,31 @@
+<%@pending_traders.each do |trader| %>
+  <div>
+    <p>
+      <strong>Email:</strong>
+      <%= trader.email %>
+    </p>
+
+    <p>
+    <strong>Birthday:</strong>
+    <%= trader.birthday %>
+    </p>
+
+    <p>
+    <strong>Gender:</strong>
+    <%= trader.gender %>
+    </p>
+
+    <p>
+    <strong>Address:</strong>
+    <%= trader.address %>
+    </p>
+
+    <p>
+    <strong>Cellphone Number:</strong>
+    <%= trader.cp_number %>
+    </p>
+  
+    <%= button_to 'Approve', approve_admin_dashboard_path(trader), method: :patch %>
+    <%= button_to 'Deny', admin_dashboard_path(trader), method: :delete %>
+  </div>
+<% end %>

@@ -3,7 +3,15 @@ class AdminDashboardController < ApplicationController
   before_action :check_admin
 
   def index
-    @traders = User.where(user_type: 'trader')
+    @traders = User.where(user_type: 'trader', status: 'approved')
+    @pending_traders = User.where(user_type: 'trader', status: 'pending')
+  end
+
+  def approve
+    @trader = User.find(params[:id])
+    @trader.update(status: 'approved')
+    UserMailer.with(user: @trader).account_approved.deliver_now
+    redirect_to admin_dashboard_index_path, notice: 'Trader was approved successfully!'
   end
 
   def new
@@ -37,7 +45,7 @@ class AdminDashboardController < ApplicationController
 
   def destroy
     @trader = User.find(params[:id])
-    @trader.destroy
+    @trader.destroy!
     redirect_to admin_dashboard_index_path, notice: 'Deleted successfully!'
   end
 
@@ -48,6 +56,6 @@ class AdminDashboardController < ApplicationController
   end
 
   def trader_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:email, :password, :password_confirmation, :birthday, :address, :cp_number, :gender)
   end
 end

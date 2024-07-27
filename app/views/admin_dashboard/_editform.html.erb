@@ -1,0 +1,41 @@
+<%= form_with(model: trader, url: admin_dashboard_path, method: :patch, local: true) do |form| %>
+  <% if trader.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(trader.errors.count, "mistake") %> prohibited this trader from being saved:</h2>
+      <ul>
+        <% trader.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birthday %><br />
+    <%= form.date_select :birthday %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gender %><br />
+    <%= form.select :gender, ['Male','Female'] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %><br />
+    <%= form.text_field :address %>
+  </div>
+
+   <div class="field">
+    <%= form.label 'Cellphone Number' %><br />
+    <%= form.text_field :cp_number %>
+  </div>
+
+  <div>
+    <%= form.submit 'Update Trader' %>
+  </div>
+<% end %>
