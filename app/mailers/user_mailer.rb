@@ -1,6 +1,7 @@
 class UserMailer < ApplicationMailer
   def pending_approval
     @user = params[:user]
+    
     mail(to: @user.email, subject: 'Your account is pending approval')
   end
 
