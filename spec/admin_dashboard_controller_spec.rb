@@ -1,10 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe AdminDashboardController, type: :controller do
-
+RSpec.describe AdminDashboardController, type: :request do
   let!(:admin) {User.find_by(email: 'admin1@email.com')}
-
+  let!(:trader) {User.create!(
+    email: 'trader1@email.com', 
+    password: 'password',
+    password_confirmation: 'password', 
+    birthday: '2000-06-20', 
+    gender: 'female', 
+    address: '1234 PP Lane', 
+    cp_number: '83838383'
+  )}
   before do
+    debugger
     sign_in admin
   end
 
@@ -28,7 +36,7 @@ RSpec.describe AdminDashboardController, type: :controller do
     it 'denies a trader and redirect to index' do
     expect{
       delete :deny, params: {id: trader.id}
-    }.to change (User, :count).by(-1)
+    }.to change(User, :count).by(-1)
     expect(response).to redirect_to(admin_dashboard_index_path)
     end
   end
@@ -41,8 +49,8 @@ RSpec.describe AdminDashboardController, type: :controller do
   end
 
   describe 'POST #create' do
-    it "should create new trader and redirect to index"
-      expect {
+    it "should create new trader and redirect to index" do
+      expect{
         post :create, params: {
           user: 
           {
@@ -56,10 +64,10 @@ RSpec.describe AdminDashboardController, type: :controller do
           }
         }
       }.to change(User, :count).by(1)
-      expect(response).to redirect_to (admin_dashboard_index_path)
+      expect(response).to redirect_to(admin_dashboard_index_path)
     end
 
-    it "should not save with missing details and stay at #create page"
+    it "should not save with missing details and stay at #create page" do
       expect{
         post :create, params: {
           user: {
@@ -77,12 +85,12 @@ RSpec.describe AdminDashboardController, type: :controller do
     end
   end
 
-  describe 'Delete #destroy'
+  describe 'Delete #destroy' do
     it 'should delete trader and stay go to index page' do
       expect{
         delete :destroy, params: { id: trader.id }
-      }.to change (User, :count).to(-1)
-      expect(response).to redirect_to (admin_dashboard_index_path)
+      }.to change(User, :count).to(-1)
+      expect(response).to redirect_to(admin_dashboard_index_path)
     end
   end
 
