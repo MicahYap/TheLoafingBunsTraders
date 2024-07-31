@@ -10,8 +10,17 @@ class AdminDashboardController < ApplicationController
   def approve
     @trader = User.find(params[:id])
     @trader.update(status: 'approved')
-    UserMailer.with(user: @trader).account_approved.deliver_now
-    redirect_to admin_dashboard_index_path, notice: 'Trader was approved successfully!'
+    account_approved(@trader)
+    flash[:alert] = 'Trader approved successfully.'
+    redirect_to admin_dashboard_index_path
+  end
+
+  def deny
+    @trader = User.find(params[:id])
+    account_denied(@trader)
+    @trader.destroy!
+    flash[:alert] = 'Trader denied successfully.'
+    redirect_to admin_dashboard_index_path
   end
 
   def new
@@ -25,7 +34,7 @@ class AdminDashboardController < ApplicationController
     if @trader.save
       redirect_to admin_dashboard_index_path, notice: 'Trader was created successfully!'
     else
-      flash.now[:alert] = 'Creation failed! Try again.'
+      flash[:alert] = 'Creation failed! Try again.'
       render :new
     end
   end
@@ -57,5 +66,13 @@ class AdminDashboardController < ApplicationController
 
   def trader_params
     params.require(:user).permit(:email, :password, :password_confirmation, :birthday, :address, :cp_number, :gender)
+  end
+
+  def account_approved(trader)
+    UserMailer.with(trader: trader).account_approved.deliver_now
+  end
+
+  def account_denied(trader)
+    UserMailer.with(trader: @trader).account_denied.deliver_now
   end
 end

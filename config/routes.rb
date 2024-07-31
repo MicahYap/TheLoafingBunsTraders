@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :admin_dashboard, only: [:index, :new, :create, :edit, :update, :destroy] do
     member do
       patch :approve
-      delete :destroy
+      delete :deny
     end
   end
   

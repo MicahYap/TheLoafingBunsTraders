@@ -12,5 +12,3 @@ admin_data.each do |admin|
     user.user_type = admin[:user_type]
   end
 end
-
-puts "Admins created successfully!"

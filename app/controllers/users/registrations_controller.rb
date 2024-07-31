@@ -29,10 +29,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(:email, :password, :password_confirmation,:birthday, :gender, :address, :cp_number)
   end
 
-  def pending_approval_email(user)
-    UserMailer.with(user: user).pending_approval.deliver_now
-    UserMailer.with(user: user).new_account_for_approval.deliver_now
+  def pending_approval_email(trader)
+    UserMailer.with(trader: trader).pending_approval.deliver_now
+    admins = User.where(user_type: 'admin')
+    admins.each do |admin|
+      UserMailer.with(admin: admin).new_account_for_approval.deliver_now
+    end
   end
+
   # GET /resource/edit
   # def edit
   #   super
