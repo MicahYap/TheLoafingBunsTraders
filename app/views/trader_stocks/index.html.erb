@@ -1,29 +1,37 @@
 <% content_for :title, "Trader Stock Dashboard" %>
 
-<h1>Trader Stocks</h1>
+<div class="flex items-center justify-center bg-rose-400 min-h-screen w-screen overflow-auto">
+  <div class="w-full max-w-4xl p-8 bg-white shadow-md rounded-lg">
+    <h1 class="text-2xl font-bold mb-6 text-center">My Portfolio</h1>
 
-<table id="trader_stocks">
-  <thead>
-    <tr>
-      <th>Stock Name</th>
-      <th>Stock Ticker</th>
-      <th>Stock Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @trader_stocks.each do |trader_stock| %>
-      <tr id="<%= dom_id(trader_stock) %>">
-        <td><%= trader_stock.stock.name %></td>
-        <td><%= trader_stock.stock.ticker %></td>
-        <td><%= number_to_currency(trader_stock.stock.price) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <table id="trader_stocks" class="min-w-full bg-white border border-gray-300 rounded-md shadow-sm">
+      <thead>
+        <tr>
+          <th class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">Stock Name</th>
+          <th class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">Stock Ticker</th>
+          <th class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">Stock Price</th>
+          <th class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @trader_stocks.each do |trader_stock| %>
+          <tr id="<%= dom_id(trader_stock) %>" class="border-b">
+            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700"><%= trader_stock.stock.name %></td>
+            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700"><%= trader_stock.stock.ticker %></td>
+            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700"><%= number_to_currency(trader_stock.stock.price) %></td>
+            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+              <%= button_to 'Sell Stocks', trader_stock_path(trader_stock), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
+    <div class="mt-6 flex items-center justify-between">
+      <%= link_to "Buy More Stocks", stocks_path, class: 'text-indigo-500 hover:text-indigo-600' %>
+      <%= button_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600' %>
+    </div>
 
-<br>
-<%= link_to "Buy More Stocks", stocks_path %>
-<%= button_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo: false } %>
-
-<p style="color: green"><%= notice %></p>
+    <p class="text-green-500 mt-4"><%= notice %></p>
+  </div>
+</div>

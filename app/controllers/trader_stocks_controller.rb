@@ -1,5 +1,6 @@
 class TraderStocksController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_trader_stock, only: [:destroy]
 
   # GET /trader_stocks or /trader_stocks.json
   def index
@@ -14,9 +15,7 @@ class TraderStocksController < ApplicationController
     if current_user.user_type == 'trader'
       stock = Stock.find(params[:id])
       current_user.stocks << stock
-      redirect_to trader_stocks_path, notice: 'Stock was successfully added.'
-    else
-      redirect_to trader_stocks_path, alert: 'Only traders can add stocks.'
+      redirect_to trader_stocks_path
     end
   end
 
@@ -58,23 +57,18 @@ class TraderStocksController < ApplicationController
   # end
 
   # # DELETE /trader_stocks/1 or /trader_stocks/1.json
-  # def destroy
-  #   @trader_stock.destroy!
+  def destroy
+    @trader_stock.destroy!
 
-  #   respond_to do |format|
-  #     format.html { redirect_to trader_stocks_url, notice: "Trader stock was successfully destroyed." }
-  #     format.json { head :no_content }
-  #   end
-  # end
+    respond_to do |format|
+      format.html { redirect_to trader_stocks_url, notice: "Stock successfully sold." }
+      format.json { head :no_content }
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trader_stock
       @trader_stock = TraderStock.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def trader_stock_params
-      params.fetch(:trader_stock, {})
     end
 end
