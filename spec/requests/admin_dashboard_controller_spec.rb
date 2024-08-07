@@ -12,7 +12,6 @@ RSpec.describe AdminDashboardController, type: :request do
     cp_number: '83838383'
   )}
   before do
-    debugger
     sign_in admin
   end
 

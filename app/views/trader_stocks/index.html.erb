@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Trader stocks" %>
+
+<h1>Trader stocks</h1>
+
+<div id="trader_stocks">
+  <% @trader_stocks.each do |trader_stock| %>
+    <%= render trader_stock %>
+    <p>
+      <%= link_to "Show this trader stock", trader_stock %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New trader stock", new_trader_stock_path %>
+<%= button_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo: false } %>
+
+

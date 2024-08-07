@@ -1,0 +1,2 @@
+module TraderStocksHelper
+end

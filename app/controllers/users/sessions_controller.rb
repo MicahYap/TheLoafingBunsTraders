@@ -18,7 +18,7 @@ class Users::SessionsController < Devise::SessionsController
       if resource.user_type == 'admin'
         redirect_to admin_dashboard_index_path and return
       else
-        redirect_to secured_assets_path and return
+        redirect_to trader_stocks_path and return
       end
     end
   end
