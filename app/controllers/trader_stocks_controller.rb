@@ -1,5 +1,5 @@
 class TraderStocksController < ApplicationController
-  before_action :set_trader_stock, only: [ :show, :destroy ]
+  before_action :set_trader_stock, only: [ :show, :destroy, :buy ]
 
   # GET /trader_stocks or /trader_stocks.json
   def index
@@ -8,6 +8,16 @@ class TraderStocksController < ApplicationController
 
   # GET /trader_stocks/1 or /trader_stocks/1.json
   def show
+  end
+
+  def buy
+    if current_user.user_type == 'trader'
+      stock = Stock.find(params[:stock_id])
+      current_user.stocks << stock
+      redirect_to trader_stocks_path, notice: 'Stock was successfully added.'
+    else
+      redirect_to trader_stocks_path, alert: 'Only traders can add stocks.'
+    end
   end
 
   # GET /trader_stocks/new

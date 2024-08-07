@@ -3,5 +3,7 @@
 <%= render @stock %>
 
 <div>
+  <%= button_to "Buy this stock", buy_trader_stocks_path(@trader_stock, stock_id: @stock.id), method: :post %>
+  <br>
   <%= link_to "Back to stocks", stocks_path %>
 </div>

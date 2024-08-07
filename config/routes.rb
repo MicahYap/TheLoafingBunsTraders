@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :trader_stocks
+  resources :trader_stocks do
+    member do
+      post 'buy'
+    end
+  end
+
   root 'trader_stocks#index'
 
   resources :admin_dashboard, only: [:index, :new, :create, :edit, :update, :destroy] do

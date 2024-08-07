@@ -1,2 +1,5 @@
-<div id="<%= dom_id trader_stock %>">
+<div id="<%= dom_id(trader_stock) %>">
+  <p><strong>Stock Name:</strong> <%= trader_stock.stock.name %></p>
+  <p><strong>Stock Ticker:</strong> <%= trader_stock.stock.ticker %></p>
+  <p><strong>Stock Price:</strong> <%= trader_stock.stock.price%></p>
 </div>

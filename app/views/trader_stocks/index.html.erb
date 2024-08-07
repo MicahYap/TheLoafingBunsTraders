@@ -1,19 +1,20 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Trader Stock Dashboard" %>
 
-<% content_for :title, "Trader stocks" %>
-
-<h1>Trader stocks</h1>
+<h1>Trader Stocks</h1>
 
 <div id="trader_stocks">
   <% @trader_stocks.each do |trader_stock| %>
-    <%= render trader_stock %>
-    <p>
-      <%= link_to "Show this trader stock", trader_stock %>
-    </p>
+    <div id="<%= dom_id(trader_stock) %>">
+      <p><strong>Stock Name:</strong> <%= trader_stock.stock.name %></p>
+      <p><strong>Stock Ticker:</strong> <%= trader_stock.stock.ticker %></p>
+      <p><strong>Stock Price:</strong> <%= trader_stock.stock.price %></p>
+      <%= button_to 'Buy this stock', buy_trader_stocks_path(stock_id: trader_stock.stock.id), method: :post %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New trader stock", new_trader_stock_path %>
+<br>
+<%= link_to "Buy Stocks", stocks_path %>
 <%= button_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo: false } %>
 
-
+<p style="color: green"><%= notice %></p>
