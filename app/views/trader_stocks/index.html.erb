@@ -2,19 +2,28 @@
 
 <h1>Trader Stocks</h1>
 
-<div id="trader_stocks">
-  <% @trader_stocks.each do |trader_stock| %>
-    <div id="<%= dom_id(trader_stock) %>">
-      <p><strong>Stock Name:</strong> <%= trader_stock.stock.name %></p>
-      <p><strong>Stock Ticker:</strong> <%= trader_stock.stock.ticker %></p>
-      <p><strong>Stock Price:</strong> <%= trader_stock.stock.price %></p>
-      <%= button_to 'Buy this stock', buy_trader_stocks_path(stock_id: trader_stock.stock.id), method: :post %>
-    </div>
-  <% end %>
-</div>
+<table id="trader_stocks">
+  <thead>
+    <tr>
+      <th>Stock Name</th>
+      <th>Stock Ticker</th>
+      <th>Stock Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @trader_stocks.each do |trader_stock| %>
+      <tr id="<%= dom_id(trader_stock) %>">
+        <td><%= trader_stock.stock.name %></td>
+        <td><%= trader_stock.stock.ticker %></td>
+        <td><%= number_to_currency(trader_stock.stock.price) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 <br>
-<%= link_to "Buy Stocks", stocks_path %>
+<%= link_to "Buy More Stocks", stocks_path %>
 <%= button_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo: false } %>
 
 <p style="color: green"><%= notice %></p>

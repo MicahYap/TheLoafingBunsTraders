@@ -1,5 +1,5 @@
 class TraderStocksController < ApplicationController
-  before_action :set_trader_stock, only: [ :show, :destroy, :buy ]
+  before_action :authenticate_user!
 
   # GET /trader_stocks or /trader_stocks.json
   def index
@@ -12,7 +12,7 @@ class TraderStocksController < ApplicationController
 
   def buy
     if current_user.user_type == 'trader'
-      stock = Stock.find(params[:stock_id])
+      stock = Stock.find(params[:id])
       current_user.stocks << stock
       redirect_to trader_stocks_path, notice: 'Stock was successfully added.'
     else
@@ -21,51 +21,51 @@ class TraderStocksController < ApplicationController
   end
 
   # GET /trader_stocks/new
-  def new
-    @trader_stock = TraderStock.new
-  end
+  # def new
+  #   @trader_stock = TraderStock.new
+  # end
 
   # GET /trader_stocks/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
-  # POST /trader_stocks or /trader_stocks.json
-  def create
-    @trader_stock = TraderStock.new(trader_stock_params)
+  # # POST /trader_stocks or /trader_stocks.json
+  # def create
+  #   @trader_stock = TraderStock.new(trader_stock_params)
 
-    respond_to do |format|
-      if @trader_stock.save
-        format.html { redirect_to trader_stock_url(@trader_stock), notice: "Trader stock was successfully created." }
-        format.json { render :show, status: :created, location: @trader_stock }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @trader_stock.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #   respond_to do |format|
+  #     if @trader_stock.save
+  #       format.html { redirect_to trader_stock_url(@trader_stock), notice: "Trader stock was successfully created." }
+  #       format.json { render :show, status: :created, location: @trader_stock }
+  #     else
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @trader_stock.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
-  # PATCH/PUT /trader_stocks/1 or /trader_stocks/1.json
-  def update
-    respond_to do |format|
-      if @trader_stock.update(trader_stock_params)
-        format.html { redirect_to trader_stock_url(@trader_stock), notice: "Trader stock was successfully updated." }
-        format.json { render :show, status: :ok, location: @trader_stock }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @trader_stock.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # # PATCH/PUT /trader_stocks/1 or /trader_stocks/1.json
+  # def update
+  #   respond_to do |format|
+  #     if @trader_stock.update(trader_stock_params)
+  #       format.html { redirect_to trader_stock_url(@trader_stock), notice: "Trader stock was successfully updated." }
+  #       format.json { render :show, status: :ok, location: @trader_stock }
+  #     else
+  #       format.html { render :edit, status: :unprocessable_entity }
+  #       format.json { render json: @trader_stock.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
-  # DELETE /trader_stocks/1 or /trader_stocks/1.json
-  def destroy
-    @trader_stock.destroy!
+  # # DELETE /trader_stocks/1 or /trader_stocks/1.json
+  # def destroy
+  #   @trader_stock.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to trader_stocks_url, notice: "Trader stock was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to trader_stocks_url, notice: "Trader stock was successfully destroyed." }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
