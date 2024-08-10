@@ -2,15 +2,11 @@ class TraderStocksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_trader_stock, only: [:destroy]
 
-  # GET /trader_stocks or /trader_stocks.json
   def index
     @trader_stocks = TraderStock.all
   end
 
-  # GET /trader_stocks/1 or /trader_stocks/1.json
-  def show
-  end
-
+  #to do 
   def buy
     if current_user.user_type == 'trader'
       stock = Stock.find(params[:id])
@@ -19,44 +15,7 @@ class TraderStocksController < ApplicationController
     end
   end
 
-  # GET /trader_stocks/new
-  # def new
-  #   @trader_stock = TraderStock.new
-  # end
-
-  # GET /trader_stocks/1/edit
-  # def edit
-  # end
-
-  # # POST /trader_stocks or /trader_stocks.json
-  # def create
-  #   @trader_stock = TraderStock.new(trader_stock_params)
-
-  #   respond_to do |format|
-  #     if @trader_stock.save
-  #       format.html { redirect_to trader_stock_url(@trader_stock), notice: "Trader stock was successfully created." }
-  #       format.json { render :show, status: :created, location: @trader_stock }
-  #     else
-  #       format.html { render :new, status: :unprocessable_entity }
-  #       format.json { render json: @trader_stock.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # # PATCH/PUT /trader_stocks/1 or /trader_stocks/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @trader_stock.update(trader_stock_params)
-  #       format.html { redirect_to trader_stock_url(@trader_stock), notice: "Trader stock was successfully updated." }
-  #       format.json { render :show, status: :ok, location: @trader_stock }
-  #     else
-  #       format.html { render :edit, status: :unprocessable_entity }
-  #       format.json { render json: @trader_stock.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # # DELETE /trader_stocks/1 or /trader_stocks/1.json
+  
   def destroy
     @trader_stock.destroy!
 
