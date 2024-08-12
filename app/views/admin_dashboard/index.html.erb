@@ -25,6 +25,7 @@
         <div class="mb-6 p-4 bg-white shadow-md rounded-md px-9">
           <%= render partial: 'user', locals: { user: user } %>
           <div class="flex justify-left space-x-4 items-center mt-4">
+            <%= link_to "See Transactions", trader_stocks_admin_dashboard_path(user), class: "text-indigo-500 hover:text-indigo-600" %>
             <%= link_to "Edit", edit_admin_dashboard_path(user), class: "text-indigo-500 hover:text-indigo-600" %>
             <%= button_to "Delete", admin_dashboard_path(user), method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" %>
           </div>

@@ -3,7 +3,7 @@ class TraderStocksController < ApplicationController
   before_action :set_trader_stock, only: [:destroy]
 
   def index
-    @trader_stocks = TraderStock.all
+    @trader_stocks = current_user.trader_stocks.includes(:stock)
   end
 
   #to do 

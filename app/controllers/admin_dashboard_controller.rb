@@ -14,6 +14,11 @@ class AdminDashboardController < ApplicationController
     redirect_to admin_dashboard_index_path
   end
 
+  def trader_stocks
+    @trader = User.find(params[:id])
+    @trader_stocks = TraderStock.where(user_id: @trader.id).includes(:stock)
+  end
+
   def show
     @pending_traders = User.where(user_type: 'trader', status: 'pending')
   end
