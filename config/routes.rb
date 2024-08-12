@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     member do
       patch :approve
       delete :deny
-      get :trader_stocks, as: 'trader_stocks'
+      get :trader_stocks
     end
   end
   

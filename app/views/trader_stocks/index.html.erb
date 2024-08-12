@@ -23,7 +23,7 @@
             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700"><%= trader_stock.stock.ticker %></td>
             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700"><%= number_to_currency(trader_stock.stock.price) %></td>
             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-              <%= button_to 'Remove Stocks', trader_stock_path(trader_stock), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600' %>
+              <%= button_to 'Sell Stocks', trader_stock_path(trader_stock), method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600' %>
             </td>
           </tr>
         <% end %>
