@@ -6,23 +6,29 @@ class TraderStocksController < ApplicationController
     @trader_stocks = current_user.trader_stocks.includes(:stock)
   end
 
-  #to do 
   def buy
     if current_user.user_type == 'trader'
       stock = Stock.find(params[:id])
-      current_user.stocks << stock
+
+      if current_user.money>= stock.price
+        current_user.stocks << stock
+        new_money = current_user.money - stock.price
+        current_user.update(money: new_money)
+      else
+        flash[:notice] = 'Insufficient balance'
+      end
       redirect_to trader_stocks_path
     end
   end
-
   
   def destroy
+    stock_price = @trader_stock.stock.price
     @trader_stock.destroy!
+    new_money = current_user.money + stock_price
+    current_user.update(money: new_money)
 
-    respond_to do |format|
-      format.html { redirect_to trader_stocks_url, notice: "Stock successfully sold." }
-      format.json { head :no_content }
-    end
+    flash[:notice] = 'Stocks sold successfully!'
+    redirect_to trader_stocks_path
   end
 
   private
