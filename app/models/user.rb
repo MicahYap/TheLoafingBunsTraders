@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :stocks, through: :trader_stocks
   scope :traders, -> { where(user_type: 'trader') }
 
+  has_many :transactions
+
   private
 
   def set_default_user_type
