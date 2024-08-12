@@ -7,13 +7,14 @@ Rails.application.routes.draw do
 
   root 'trader_stocks#index'
 
-  resources :admin_dashboard, only: [:index, :new, :create, :edit, :update, :destroy] do
+  resources :admin_dashboard do
     member do
       patch :approve
       delete :deny
     end
   end
   
+  get 'admin_dashboard/pending_traders', to: 'admin_dashboard#pending_traders', as: 'pending_traders_admin_dashboard'
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',

@@ -4,7 +4,6 @@ class AdminDashboardController < ApplicationController
 
   def index
     @traders = User.where(user_type: 'trader', status: 'approved')
-    @pending_traders = User.where(user_type: 'trader', status: 'pending')
   end
 
   def approve
@@ -13,6 +12,10 @@ class AdminDashboardController < ApplicationController
     account_approved(@trader)
     flash[:alert] = 'Trader approved successfully.'
     redirect_to admin_dashboard_index_path
+  end
+
+  def show
+    @pending_traders = User.where(user_type: 'trader', status: 'pending')
   end
 
   def deny
