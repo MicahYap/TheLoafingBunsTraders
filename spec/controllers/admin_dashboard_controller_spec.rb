@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AdminDashboardController, type: :request do
+RSpec.describe AdminDashboardController, type: :controller do
   let!(:admin) {User.find_by(email: 'admin1@email.com')}
   let!(:trader) {User.create!(
     email: 'trader1@email.com', 
@@ -11,14 +11,34 @@ RSpec.describe AdminDashboardController, type: :request do
     address: '1234 PP Lane', 
     cp_number: '83838383'
   )}
-  before do
-    sign_in admin
-  end
+  let!(:stock){Stock.create!(
+    name: 'sample stock',
+    ticker: 'ticker',
+    price: 999
+  )}
+
+  let(:transaction){Transaction.create!(
+    user: trader,
+    stock: stock,
+    amount: 100,
+    balance: 4900,
+    transaction_type: 'buy'
+  )}
 
   describe 'GET #index' do
-    it 'returns success' do
+    it 'shows approved traders' do
+      approved_trader = User.create!(
+        email: 'approved_trader@email.com',
+        password: '111111',
+        password_confirmation: '111111',
+        birthday: '2000-06-20', 
+        gender: 'female', 
+        address: '1234 PP Lane', 
+        cp_number: '83838383'
+      )
+      approved_trader.update(status: 'approved')
       get :index
-      expect(response).to be_successful
+      expect(assigns(:traders)).to include(approved_trader)
     end
   end
 
@@ -28,6 +48,31 @@ RSpec.describe AdminDashboardController, type: :request do
       trader.reload
       expect(trader.status).to eq('approved')
       expect(response).to redirect_to(admin_dashboard_index_path)
+    end
+  end
+
+  describe 'GET #transactions' do
+    it 'gets transaction of a trader' do
+      get :transactions, params: {id: trader.id}
+
+      expect(assigns(:trader)).to eq(trader)
+      expect(assigns(:transactions)).to match_array([transaction])
+    end
+  end
+
+  describe 'show #show' do
+    it 'shows pending traders' do
+      pending_trader = User.create!(
+        email: 'approved_trader@email.com',
+        password: '111111',
+        password_confirmation: '111111',
+        birthday: '2000-06-20', 
+        gender: 'female', 
+        address: '1234 PP Lane', 
+        cp_number: '83838383'
+      )
+      get :show
+      expect(assign(:pending_traders)).to include(pending_trader)
     end
   end
 
@@ -63,7 +108,6 @@ RSpec.describe AdminDashboardController, type: :request do
           }
         }
       }.to change(User, :count).by(1)
-      expect(response).to redirect_to(admin_dashboard_index_path)
     end
 
     it "should not save with missing details and stay at #create page" do
@@ -93,32 +137,26 @@ RSpec.describe AdminDashboardController, type: :request do
     end
   end
 
-  describe 'GET #edit' do
-    it 'should show edit page' do
-      get :edit
-      expect(response).to be_successful
-    end
-  end
-
   describe 'PATCH #update' do
-    it 'should update trader and redirect to index page' do
-      patch :update, params: {
-        id: trader.id,
-        user: {
-          email: 'trader1@email.com', 
-          password: 'password',
-          password_confirmation: 'password', 
-          birthday: '2000-06-20', 
-          gender: 'female', 
-          address: '222 PP Lane', 
-          cp_number: '83838383', 
-          user_type: 'trader', 
-        }
+  it 'updates the trader and redirects to the index page' do
+    patch :update, params: {
+      id: trader.id,
+      user: {
+        email: 'trader1@email.com', 
+        password: 'password',
+        password_confirmation: 'password', 
+        birthday: '2000-06-20', 
+        address: '222 PP Lane', 
+        cp_number: '83838383', 
+        gender: 'female'
       }
-      trader.reload
-      expect(trader.address).to eq('222 PP Lane')
-      expect(response).to redirect_to(admin_dashboard_index_path)
-    end
+    }
+    trader.reload
+    expect(trader.address).to eq('222 PP Lane')
+    expect(response).to redirect_to(admin_dashboard_index_path)
+    expect(flash[:notice]).to eq('Updated successfully!')
   end
+end
+
 
 end

@@ -7,6 +7,9 @@ class User < ApplicationRecord
   validates :user_type, inclusion: {in: ['admin', 'trader']}, presence: true
   validates :status, inclusion: {in: ['pending', 'approved']}, presence: true
 
+  validates :email, presence: true
+  validates :password, presence: true, confirmation: true
+
   before_validation :set_default_user_type
   before_create :set_default_status
 
