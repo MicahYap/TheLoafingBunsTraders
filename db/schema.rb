@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_07_010527) do
-
+ActiveRecord::Schema[7.2].define(version: 2024_08_12_053648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +39,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_07_010527) do
     t.index ["user_id"], name: "index_trader_stocks_on_user_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "stock_id", null: false
+    t.decimal "amount"
+    t.string "transaction_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "balance"
+    t.index ["stock_id"], name: "index_transactions_on_stock_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -56,10 +67,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_07_010527) do
 
     t.string "status", default: "pending"
 
+    t.decimal "money", precision: 10, scale: 2, default: "5000.0"
+
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "trader_stocks", "stocks"
   add_foreign_key "trader_stocks", "users"
+  add_foreign_key "transactions", "stocks"
+  add_foreign_key "transactions", "users"
 end

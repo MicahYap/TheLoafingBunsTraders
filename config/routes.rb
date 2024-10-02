@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     member do
       patch :approve
       delete :deny
-      get :trader_stocks, as: 'trader_stocks'
+      get :transactions
     end
   end
   
@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   resources :users do
     resources :trader_stocks, only: [:create, :destroy]
   end
+
+  resources :transactions, only: [:index]
 
   resources :stocks, only: [:index, :show]
 end

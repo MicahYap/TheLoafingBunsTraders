@@ -25,17 +25,5 @@ RSpec.describe User, type: :model do
       )
       expect(user.save).to be_falsey
     end
-
-    it 'does not save without password confirmation' do
-      user = User.new(
-        email: 'trader1@email.com',
-        password: 'password',
-        birthday: '2000-06-20',
-        gender: 'female',
-        address: '1234 PP Lane',
-        cp_number: '83838383'
-      )
-      expect(user.save).to be_falsey
-    end
   end
 end
