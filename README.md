@@ -10,12 +10,13 @@
   <li>Devise for user authentication</li>
   <li>Tailwind CSS</li>
   <li>User Mailer</li>
-
-<p>Clone the repository: git clone https://github.com/MicahYap/TheLoafingBunsTraders.git</p>
-
+</ul>
 
 <p>Usage Sign Up:</p>
 <ul>
   <li>Users can sign up for an account to start trading.</li>
   <li>Admin Dashboard: Admins can manage users and view their trading activities.</li>
   <li>Trading: Users can buy and sell stocks, with transaction details recorded in their account.</li>
+</ul>
+
+<p>Clone the repository: git clone https://github.com/MicahYap/TheLoafingBunsTraders.git</p>
