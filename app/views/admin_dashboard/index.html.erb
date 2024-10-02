@@ -1,21 +1,48 @@
-<h1>Traders Overview</h1>
-<p>With great power comes great responsibility, so don't spill sensitive info! God is watching!</p>
-<%= link_to 'Create New Rabbit Trader',new_admin_dashboard_path %>
 
-<h1>pending users</h1>
-<% if @pending_traders.any? %>
-  <%= render 'pending_traders', traders: @pending_traders %>
-<% end %>
+<html>
+  <body class="bg-purple-200 h-screen w-screen p-6">
+    <!-- Header -->
+    <div class="text-center mt-4 mb-8">
+      <h1 class="text-4xl font-bold text-gray-800 mb-4">Traders Overview</h1>
+      <p class="mt-2 text-lg text-gray-600 mb-6">With great power comes great responsibility, so don't spill sensitive info! God is watching!</p>
+    </div>
 
-<hr>
+    <!-- Create New Trader Link -->
+    <div class="mb-6 text-center">
+      <%= link_to 'Create New Rabbit Trader', new_admin_dashboard_path, class: "inline-block px-6 py-2 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600" %>
+    </div>
 
-<h1>approved users<h1>
-<% @traders.each do |user| %>
-  <%= render partial: 'user', locals: { user: user } %>
-  <%= link_to "Edit", edit_admin_dashboard_path(user)%>
-  <%= button_to "Delete", admin_dashboard_path(user), method: :delete%>
-<% end %>
+    <!-- Pending Users Section -->
+    <div class= 'flex justify-around'>
+      <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Pending Users</h2>
+      <% if @pending_traders.any? %>
+        <%= render 'pending_traders', traders: @pending_traders %>
+      <% else %>
+        <p class="text-gray-600">No pending traders at the moment.</p>
+      <% end %>
+      </section>
 
-<br>
+      <!-- Approved Users Section -->
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Approved Users</h2>
+        <% @traders.each do |user| %>
+          <div class="mb-6 p-4 bg-white shadow-md rounded-md px-9">
+            <%= render partial: 'user', locals: { user: user } %>
+            <div class="flex justify-left space-x-4 items-center mt-4">
+              <%= link_to "Edit", edit_admin_dashboard_path(user), class: "text-indigo-500 hover:text-indigo-600" %>
+              <%= button_to "Delete", admin_dashboard_path(user), method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" %>
+            </div>
+          </div>
+        <% end %>
+      </section>
+    </div>
 
-<%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+    <br>
+
+    <!-- Logout Button -->
+    <div class="text-center">
+      <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600" %>
+    </div>
+  </body>
+</html>

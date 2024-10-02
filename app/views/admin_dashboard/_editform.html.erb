@@ -1,41 +1,50 @@
-<%= form_with(model: trader, url: admin_dashboard_path, method: :patch, local: true) do |form| %>
-  <% if trader.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(trader.errors.count, "mistake") %> prohibited this trader from being saved:</h2>
-      <ul>
-        <% trader.errors.full_messages.each do |error| %>
-          <li><%= error %></li>
+<div class='bg-rose-400 h-screen w-screen p-9'>
+  <div class="flex items-center justify-center">
+    <div class="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+      <h2 class="text-2xl font-bold mb-6 text-center">Update Trader</h2>
+
+      <%= form_with(model: trader, url: admin_dashboard_path, method: :patch, local: true) do |form| %>
+        <% if trader.errors.any? %>
+          <div class="mb-4 text-red-500">
+            <h2><%= pluralize(trader.errors.count, "mistake") %> prohibited this trader from being saved:</h2>
+            <ul class="list-disc pl-5">
+              <% trader.errors.full_messages.each do |error| %>
+                <li><%= error %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+
+        <div class="mb-4">
+          <%= form.label :email, class: "block text-gray-700" %>
+          <%= form.text_field :email, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+
+        <div class="mb-4">
+          <%= form.label :birthday, class: "block text-gray-700" %>
+          <%= form.date_select :birthday, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+
+        <div class="mb-4">
+          <%= form.label :gender, class: "block text-gray-700" %>
+          <%= form.select :gender, ['Male','Female'], { include_blank: true }, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+
+        <div class="mb-4">
+          <%= form.label :address, class: "block text-gray-700" %>
+          <%= form.text_field :address, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+
+        <div class="mb-4">
+          <%= form.label 'Cellphone Number', class: "block text-gray-700" %>
+          <%= form.text_field :cp_number, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <%= form.submit 'Update Trader', class: "bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600" %>
+          <%= link_to 'Back', admin_dashboard_index_path%>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :email %>
-    <%= form.text_field :email %>
   </div>
-
-  <div class="field">
-    <%= form.label :birthday %><br />
-    <%= form.date_select :birthday %>
-  </div>
-
-  <div class="field">
-    <%= form.label :gender %><br />
-    <%= form.select :gender, ['Male','Female'] %>
-  </div>
-
-  <div class="field">
-    <%= form.label :address %><br />
-    <%= form.text_field :address %>
-  </div>
-
-   <div class="field">
-    <%= form.label 'Cellphone Number' %><br />
-    <%= form.text_field :cp_number %>
-  </div>
-
-  <div>
-    <%= form.submit 'Update Trader' %>
-  </div>
-<% end %>
+</div>
