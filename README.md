@@ -27,4 +27,10 @@
   <li>Trading: Users can buy and sell stocks, with transaction details recorded in their account.</li>
 </ul>
 
-<p>Clone the repository: git clone https://github.com/MicahYap/TheLoafingBunsTraders.git</p>
+<p>Clone the repository:</p>
+<ul>
+  <li>git clone https://github.com/MicahYap/TheLoafingBunsTraders.git</li>
+  <li>go to the folder</li>
+  <li>rails s</li>
+</ul>
+
