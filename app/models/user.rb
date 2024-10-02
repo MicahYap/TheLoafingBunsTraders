@@ -5,13 +5,19 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :user_type, inclusion: {in: ['admin', 'trader']}, presence: true
+  validates :status, inclusion: {in: ['pending', 'approved']}, presence: true
 
   before_validation :set_default_user_type
+  before_create :set_default_status
 
   private
 
   def set_default_user_type
     self.user_type ||= 'trader'
+  end
+
+  def set_default_status
+    self.status ||='pending'
   end
 
 end
