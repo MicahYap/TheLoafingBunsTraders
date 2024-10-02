@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'validations' do
     it 'does not save without email' do
-      debugger
       user = User.new(
         password: 'password',
         password_confirmation: 'password',

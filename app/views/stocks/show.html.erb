@@ -1,0 +1,19 @@
+<div class="flex items-center justify-center bg-cyan-400 min-h-screen w-screen overflow-auto">
+  <div class="w-full max-w-4xl p-8 bg-white shadow-md rounded-lg">
+    <p class="text-green-500 mb-4"><%= notice %></p>
+
+    <%= render @stock %>
+
+    <div class="mt-6 flex flex-col items-center space-y-4">
+      <%= button_to "Add this stock", buy_trader_stock_path(@stock), method: :post, class: "bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600" %>
+      <%= link_to "Back to stocks", stocks_path, class: "text-indigo-500 hover:text-indigo-600" %>
+    </div>
+    
+    <div class="mt-8">
+      <h2 class="text-xl font-semibold mb-4">Price Trend</h2>
+      <div class="flex justify-center">
+        <img src="https://images.saymedia-content.com/.image/t_share/MTgwODUxMTUyMjY1NDg3NzIw/how-to-read-stock-market-charts.jpg" alt="Stock Graph" class="w-full max-w-lg rounded-md shadow-md">
+      </div>
+    </div>
+  </div>
+</div>

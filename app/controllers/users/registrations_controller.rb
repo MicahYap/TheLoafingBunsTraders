@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     build_resource(sign_up_params)
-    resource.user_type = 'trader' # Default new users to 'trader'
+    resource.user_type = 'trader'
     resource.status = 'pending'
 
     if resource.save
