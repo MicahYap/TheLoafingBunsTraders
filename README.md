@@ -1,4 +1,3 @@
-Trading App
 Welcome to the The Loafing Buns Traders App! This application is built using Ruby on Rails and provides a platform for traders to buy and sell stocks, manage their accounts, and track transactions. The app features user authentication, admin functionality, and a smooth user interface for managing trades and account status.
 
 
