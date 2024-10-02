@@ -13,7 +13,7 @@
 <% @traders.each do |user| %>
   <%= render partial: 'user', locals: { user: user } %>
   <%= link_to "Edit", edit_admin_dashboard_path(user)%>
-  <%= button_to "Delete", admin_dashboard_path(user), method: :deny%>
+  <%= button_to "Delete", admin_dashboard_path(user), method: :delete%>
 <% end %>
 
 <br>
